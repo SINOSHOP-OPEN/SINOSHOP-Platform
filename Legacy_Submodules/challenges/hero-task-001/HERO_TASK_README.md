@@ -1,4 +1,13 @@
-# ⚔ hero-task-001 — SINOSHOP 姿态联控挑战赛 (Rev 3.2 TLD)
+> ⚠️ **历史归档声明**
+> 
+> 本挑战（hero-task-001）基于 **R16-SDK 协议体系** 发布，已于 2026-05-21 被 **USS v2.2.3d** 体系下的升级版取代。
+> 
+> **当前活跃版本：** [hero-task-001-uss](../hero-task-001-uss/) — 驭风者 · 全向气旋三维拓扑气动抬升算法
+> 
+> 本文档保留作为技术演进的历史参考，不再接受新方案提交。请参与者移步至升级版挑战入口。
+> 
+> ---
+> # ⚔ hero-task-001 — SINOSHOP 姿态联控挑战赛 (Rev 3.2 TLD)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
