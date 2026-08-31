@@ -58,9 +58,3 @@ Distributed under the **Apache License 2.0**. See [LICENSE](LICENSE) for more in
 ---
 
 *Last Updated: 2026-08-31 | SLFS V17.2-REV.2*
-
-| 域名字符 | 战略角色 | 物理路径 |
-| :--- | :--- | :--- |
-| `seas.city` | 深空标尺 (全球愿景) | [`/SINOSFT-PATH/seas.city/`](/SINOSFT-PATH/seas.city) |
-| `sinosft.com` | 高能粒子 (核心技术) | [`/SINOSFT-PATH/sinosft.com/`](/SINOSFT-PATH/sinosft.com) |
-| `sftcity.com` | 应用卫星 (落地场景) | [`/SINOSFT-PATH/sftcity.com/`](/SINOSFT-PATH/sftcity.com) |
