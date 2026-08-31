@@ -54,6 +54,7 @@ Distributed under the **Apache License 2.0**. See [LICENSE](LICENSE) for more in
 > 🌊 **Sea Generates Power → Power Sustains Ships → Ships Bridge Cities → Cities Benefit People → Aerospace for All → Harmony for All Beings.**
 >
 > ✨ **Loyalty shines through ages; benevolence spreads across seasons.**
+> 🌐 **Chinese Version**:[ [View on GitHub](https://github.com/SINOSHOP-OPEN/SINOSHOP-Platform)](https://gitee.com/sinoshop/sinoshop-os/blob/master/README.md)
 
 ---
 
