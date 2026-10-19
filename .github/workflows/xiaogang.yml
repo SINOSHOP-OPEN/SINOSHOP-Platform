@@ -1,0 +1,28 @@
+name: 小港自动更新任务
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # 每天北京时间早上 10:00 自动运行
+  workflow_dispatch: # 开启手动触发按钮
+
+jobs:
+  xiaogang_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查代码 (Checkout)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.XIAOGANG_TOKEN }}
+
+      - name: 小港执行操作
+        run: |
+          echo "小港开始干活了！"
+          # 在这里写你需要小港执行的具体命令，比如更新某个文件
+          
+      - name: 提交并推送
+        run: |
+          git config --local user.email "standards@sinoshop.org"
+          git config --local user.name "XiaoGang Bot"
+          git add .
+          git diff --staged --quiet || git commit -m "docs: 小港自动更新 [skip ci]"
+          git push
