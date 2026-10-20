@@ -40,80 +40,12 @@
 import os
 import sys
 import json
-import base64
 import argparse
-import urllib.request
-from urllib.parse import quote
 
-# ---------------------------------------------------------------- API 通道
-
-HDR = {
-    "User-Agent": "sinoport-sync",
-    "Accept": "application/vnd.github+json",
-    "Content-Type": "application/json",
-}
-
-
-def make_api(token):
-    hdr = dict(HDR)
-    hdr["Authorization"] = "Bearer " + token
-    return hdr
-
-
-def enc_url(url):
-    """只对 path 部分做 URL 编码；保留 scheme 与 / 分隔符。
-
-    中文文件名必须编码，否则请求直接失败（且错误体为空）。
-    """
-    head, sep, rest = url.partition("://")
-    parts = rest.split("/", 1)
-    if len(parts) == 1:
-        return url
-    return head + sep + parts[0] + "/" + quote(parts[1], safe="/~")
-
-
-class GitHub(object):
-    def __init__(self, token, repo, branch="main"):
-        self.api = "https://api.github.com/repos/%s" % repo
-        self.branch = branch
-        self.hdr = make_api(token)
-
-    def _call(self, path, method="GET", data=None):
-        url = self.api + path
-        base, _, tail = url.partition("?")
-        url = enc_url(base) + (("?" + tail) if tail else "")
-        body = json.dumps(data).encode() if data is not None else None
-        req = urllib.request.Request(url, data=body, method=method,
-                                     headers=self.hdr)
-        try:
-            r = urllib.request.urlopen(req, timeout=60)
-            return r.status, r.read().decode("utf-8", "replace")
-        except Exception as e:
-            b = ""
-            try:
-                b = e.read().decode("utf-8", "replace")
-            except Exception:
-                pass
-            return getattr(e, "code", "ERR"), b
-
-    def sha_of(self, path):
-        s, b = self._call("/contents/%s?ref=%s" % (path, self.branch))
-        return json.loads(b)["sha"] if s == 200 else None
-
-    def put(self, path, raw, msg):
-        """raw为bytes。已有文件则更新，否则新建。"""
-        cur = self.sha_of(path)
-        payload = {
-            "message": msg,
-            "content": base64.b64encode(raw).decode(),
-            "branch": self.branch,
-        }
-        if cur:
-            payload["sha"] = cur
-        s, b = self._call("/contents/%s" % path, "PUT", payload)
-        if s in (200, 201):
-            return True, json.loads(b)["content"]["sha"][:10]
-        return False, b[:200]
+# 复用 gh_api：令牌读取、URL 编码、幂等 PUT 全部收敛在一处。
+# 这样令牌只在 gh_api 里从环境变量读一次，本文件不接触任何凭据。
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from gh_api import GitHub, TOKEN_ENV   # noqa: E402
 
 
 # ---------------------------------------------------------------- 同步清单
@@ -159,19 +91,18 @@ def main():
     args = ap.parse_args()
 
     src = args.src or os.environ.get("SINOPORT_SRC")
-    tok = os.environ.get("XIAOGANG_TOKEN")
     if not src:
         print("[BLOCKED] 未指定源目录：--src 或环境变量 SINOPORT_SRC")
         return 2
-    if not tok:
-        print("[BLOCKED] 未找到环境变量 XIAOGANG_TOKEN")
+    if not os.environ.get(TOKEN_ENV):
+        print("[BLOCKED] 未找到环境变量 %s" % TOKEN_ENV)
         return 2
     src = os.path.abspath(src)
     if not os.path.isdir(src):
         print("[BLOCKED] 源目录不存在：%s" % src)
         return 2
 
-    gh = GitHub(tok, args.repo, args.branch)
+    gh = GitHub(repo=args.repo, branch=args.branch)
     print("源目录 : %s" % src)
     print("目标   : %s@%s" % (args.repo, args.branch))
     print()
