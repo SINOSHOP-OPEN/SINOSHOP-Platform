@@ -1,4 +1,17 @@
-﻿
+﻿<!-- SINOSHOP SYSTEM STRIP:BEGIN -->
+<table align="center">
+<tr>
+<td><b>🌊 SINOSHOP 星系</b></td>
+<td><a href="https://gitee.com/sinoshop/sinoshop-hub">星系导航</a></td>
+<td><a href="https://sinoshop-open.github.io/webpage/">官网</a></td>
+<td><a href="https://sinoshop-open.github.io/webpage/index.html#eval-kit">评审直链</a></td>
+<td><a href="https://sinoshop-open.github.io/webpage/harmony.html">🕊️ 致众生和谐书</a></td>
+<td><a href="https://sinoshop-open.github.io/webpage/docs/manifesto.html">📜 海洋文明工程宣言</a></td>
+<td><a href="https://sinoshop-open.github.io/webpage/whitepaper.html">技术白皮书</a></td>
+</tr>
+</table>
+<!-- SINOSHOP SYSTEM STRIP:END -->
+
 ---
 
 ## 🌿 Ecosystem Projects
